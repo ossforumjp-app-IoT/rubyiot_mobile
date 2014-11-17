@@ -10,17 +10,13 @@ class ChartController < UIViewController
     super
     self.title = "チャート"
     self.view.backgroundColor = UIColor.whiteColor
-    #url = NSURL.URLWithString("http://rubyiot.rcloud.jp/chart?sensor_id=1&start=2014-10-03+09:20:00&span=weekly")
-    #request = NSURLRequest.requestWithURL(url)
     @webview = UIWebView.new.tap do |v|
       v.frame = self.view.bounds
-      #v.scalesPageToFit = true
-      #v.loadRequest(request)
       self.view.addSubview(v)
     end
 
     @segment = UISegmentedControl.alloc.initWithItems(["時", "日", "週", "月", "年"])
-    @segment.frame = CGRectMake(0, 440, 290, 22);
+    @segment.frame = CGRectMake(0, 440, 290, 30);
     @segment.segmentedControlStyle = UISegmentedControlStyleBar
     @segment.selectedSegmentIndex = 0
     @segment.addTarget(self, action: "segmentChange", forControlEvents: UIControlEventValueChanged)

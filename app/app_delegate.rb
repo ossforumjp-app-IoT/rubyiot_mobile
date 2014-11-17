@@ -38,8 +38,8 @@ class AppDelegate
       forBarMetrics: UIBarMetricsDefault)
     color = UIColor.colorWithRed(0.557, green:0.722, blue:1.0, alpha:1.0)
     UINavigationBar.appearance.setBackgroundColor(color)
-    UINavigationBar.appearance.setShadowImage(UIImage.alloc.init)
-    UINavigationBar.appearance.barTintColor = color
+    #UINavigationBar.appearance.setShadowImage(UIImage.alloc.init)
+    #UINavigationBar.appearance.barTintColor = color
     UINavigationBar.appearance.tintColor = UIColor.blueColor
     UINavigationBar.appearance.setTitleTextAttributes({
       UITextAttributeTextColor => UIColor.blueColor,

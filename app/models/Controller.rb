@@ -18,7 +18,6 @@ class Controller
             :device_id => json[controller_id]['device_id'],
             :value_range => json[controller_id]['value_range'],
           }
-          p "controller_data=#{data}"
         end
         block.call(data)
       else

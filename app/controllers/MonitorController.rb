@@ -16,6 +16,7 @@ class MonitorController < UIViewController
 
   def viewDidLoad
     super
+    self.view.backgroundColor = UIColor.whiteColor
     self.title = "監視値"
 
     self.tap {

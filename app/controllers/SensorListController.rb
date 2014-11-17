@@ -57,6 +57,7 @@ class SensorListController < UIViewController
     @table.dataSource = self
     @table.delegate = self
 
+    @sensors = nil
     retrieve_data
     @pending = false
   end
@@ -135,7 +136,6 @@ class SensorListController < UIViewController
 
   # センサーリストの取得
   def retrieve_data
-    @sensors = nil
     loaded_data_func = lambda { |data|
       if data != nil
         @sensors = data

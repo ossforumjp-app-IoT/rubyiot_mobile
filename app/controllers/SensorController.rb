@@ -70,7 +70,6 @@ class SensorController < UIViewController
   def monitor_action
     loaded_data_func = lambda { |data|
       data.each do |d|
-        p "monitor data = #{d}"
         monitor_controller = MonitorController.alloc.initWithMonitor(d)
         self.navigationController.pushViewController(monitor_controller, animated: true)    
       end

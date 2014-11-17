@@ -36,12 +36,12 @@ class RemoteController < UIViewController
     self.view.frame.size.height / 2)
     self.view.addSubview @label_value
 
-    margin = 20
+    margin = 50
     @on_button = UIButton.rounded_rect.tap do |b|
       b.setTitle("ON", forState:UIControlStateNormal)
       b.accessibilityLabel = "Hello Button"
       b.frame = [[margin, 400], [view.frame.size.width - margin * 2, 42]]
-      b.backgroundColor = UIColor.greenColor
+      b.backgroundColor = getButtonColor
       b.on(:touch) do |event|
         push("1")
       end
@@ -51,7 +51,7 @@ class RemoteController < UIViewController
     @off_button = UIButton.rounded_rect.tap do |b|
       b.setTitle("OFF", forState:UIControlStateNormal)
       b.frame = [[margin, 450], [view.frame.size.width - margin * 2, 42]]
-      b.backgroundColor = UIColor.greenColor
+      b.backgroundColor = getButtonColor
       b.on(:touch) do |event|
         push("0")
       end
@@ -149,7 +149,7 @@ class RemoteController < UIViewController
     when "0"
       @label_value.text = "停止中"
       @on_button.enabled = true
-      @on_button.backgroundColor = UIColor.greenColor
+      @on_button.backgroundColor = getButtonColor
       @off_button.enabled = false
       @off_button.backgroundColor = UIColor.grayColor
     when "1"
@@ -157,8 +157,12 @@ class RemoteController < UIViewController
       @on_button.enabled = false
       @on_button.backgroundColor = UIColor.grayColor
       @off_button.enabled = true
-      @off_button.backgroundColor = UIColor.greenColor
+      @off_button.backgroundColor = getButtonColor
     end
+  end
+
+  def getButtonColor
+    UIColor.colorWithRed(0.557, green:0.722, blue:1.0, alpha:1.0)
   end
 
   def viewWillDisappear(animated)
