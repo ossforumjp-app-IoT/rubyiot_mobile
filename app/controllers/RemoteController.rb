@@ -96,6 +96,7 @@ class RemoteController < UIViewController
         case d[:status]
         when ""
           startTimer
+=begin #
         when "0" # 未実行
           startTimer
         when "1" # 実施中
@@ -107,6 +108,11 @@ class RemoteController < UIViewController
         when "9" # 異常
           setControlStatus
           App.alert("操作に失敗しました")
+=end
+        when "0" # 完了
+          self.controller[:value] = d[:value]
+          setControlStatus
+          App.alert("操作が完了しました")
         else
           setControlStatus
 　　　　　　App.alert("操作に失敗しました")
