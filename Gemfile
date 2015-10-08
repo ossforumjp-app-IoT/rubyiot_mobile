@@ -5,4 +5,5 @@ gem 'rake'#, '~> 0.9.6' # motion-cocoapods fails to work with 10.0.2
 #gem 'motion-plot'
 gem 'motion-layout'
 gem 'bubble-wrap'
+gem 'bubble-wrap-http'
 gem 'sugarcube', '~> 0.7.5'
