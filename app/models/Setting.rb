@@ -8,7 +8,7 @@ class Settings
     end
   end
 
-  Properties = %w(server_address, username, password_hash)
+  Properties = %w(server_address username password_hash)
   
   Properties.each do |name|
     define_method("#{name}=") do |v|
