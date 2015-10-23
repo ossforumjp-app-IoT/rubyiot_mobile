@@ -20,6 +20,7 @@ RubyMotion 3.14
 ### ビルド/実行方法
 Xcode, RubyMotionはすでにインストールされていることを想定しています。
 ここではiPhoneシミュレータでの実行方法を記します。
+
     $ git clone https://github.com/ossforumjp-app-IoT/rubyiot_mobile.git
     $ cd rubyiot_mobile/
     $ bundle install --path vendor/bundle
