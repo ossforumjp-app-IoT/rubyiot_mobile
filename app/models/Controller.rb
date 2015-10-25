@@ -5,7 +5,7 @@ class Controller
   # retriving data via api
   def self.retrieve_data(block)
     url = HTTP + $settings.server_address + CONTROLLER_URL
-    BW::HTTP.get(url) do |response|
+    BW::HTTP.get(url, {cookie: $loginSession}) do |response|
       data = []
       if response.ok?
         json = BW::JSON.parse(response.body.to_str)

@@ -1,3 +1,4 @@
+# coding: utf-8
 # センサーリストの更新間隔
 SENSOR_LIST_UPDATE_INTERVAL = 5 # ポーリング間隔
 

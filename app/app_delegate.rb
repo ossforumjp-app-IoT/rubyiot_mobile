@@ -1,3 +1,4 @@
+# coding: utf-8
 class AppDelegate
   #attr_accessor :notice_list
 
@@ -8,6 +9,9 @@ class AppDelegate
     if $settings.server_address == nil
        $settings.server_address = ""
     end
+
+    # サーバへのログインセッション
+    $loginSession = nil
 
     @window = UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
 
