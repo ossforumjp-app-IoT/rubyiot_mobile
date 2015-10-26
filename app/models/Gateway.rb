@@ -1,4 +1,4 @@
-class Getway
+class Gateway
   HTTP = 'http://'
   SENSOR_URL = '/api/gateway'
 
