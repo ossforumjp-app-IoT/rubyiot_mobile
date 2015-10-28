@@ -1,3 +1,4 @@
+# coding: utf-8
 # カスタムセル
 class GatewayLabelCell < UITableViewCell
 
@@ -11,8 +12,8 @@ class GatewayLabelCell < UITableViewCell
     Motion::Layout.new do |layout|
       layout.view self.contentView
       layout.subviews "headingLabel" => headingLabel
-      layout.vertical "|-[headingLabel]-|"
-      layout.horizontal "|-[headingLabel-]"
+      layout.vertical "|-[headingLabel]|"
+      layout.horizontal "|-[headingLabel]"
     end
   end
 
@@ -46,7 +47,7 @@ class GatewayListController < UIViewController
     @reuseIdentifier ||= "CELL_IDENTIFIER"
 
     cell = tableView.dequeueReusableCellWithIdentifier(@reuseIdentifier) || begin
-      ThreeLabelCell.alloc.initWithStyle(UITableViewCellStyleSubtitle, reuseIdentifier:@reuseIdentifier)
+      GatewayLabelCell.alloc.initWithStyle(UITableViewCellStyleSubtitle, reuseIdentifier:@reuseIdentifier)
     end
 
     cell.headingLabel.text = @gateways[indexPath.row][:name]
