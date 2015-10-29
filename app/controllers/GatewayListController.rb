@@ -59,8 +59,13 @@ class GatewayListController < UIViewController
   end
 
   def tableView(tableView, didSelectRowAtIndexPath: indexPath)
-    # TODO ゲートウェイ選択後のセンサー一覧画面へ遷移
-    puts "gateway selected #{indexPath.row}"
+    # ゲートウェイ選択後のセンサー一覧画面へ遷移
+    SensorListController.new.tap do |c|
+      c.gateway = @gateways[indexPath.row]
+      back_button = UIBarButtonItem.alloc.initWithTitle("戻る", style:UIBarButtonItemStylePlain, target:nil, action:nil)
+      self.navigationItem.setBackBarButtonItem(back_button, animated:true)
+      navigationController.pushViewController(c, animated:true)
+    end
   end
 
   def initWithNibName(name, bundle: bundle)

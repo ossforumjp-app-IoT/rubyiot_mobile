@@ -1,10 +1,14 @@
 class Controller
   HTTP = 'http://'
-  CONTROLLER_URL = '/api/controller?gateway_id=1'
+  CONTROLLER_URL = '/api/controller?gateway_id='
   
   # retriving data via api
-  def self.retrieve_data(block)
-    url = HTTP + $settings.server_address + CONTROLLER_URL
+  def self.retrieve_data(gateway_id, block)
+    @gateway_id = gateway_id
+    @block = block
+
+    url = HTTP + $settings.server_address + CONTROLLER_URL + @gateway_id.to_s
+    puts url
     BW::HTTP.get(url, {cookie: $loginSession}) do |response|
       data = []
       if response.ok?
@@ -19,9 +23,9 @@ class Controller
             :value_range => json[controller_id]['value_range'],
           }
         end
-        block.call(data)
+        @block.call(data)
       else
-        block.call(data)
+        @block.call(data)
       end
     end
   end

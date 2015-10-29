@@ -4,10 +4,11 @@ class Gateway
 
   # retriving data via api
   def self.retrieve_data(block)
+    @block = block
     
-    retrieve_data_func = lambda do |login, block|
+    retrieve_data_func = lambda do |login|
       if login == false
-        block.call(nil)
+        @block.call(nil)
       end
       
       url = HTTP + $settings.server_address + SENSOR_URL
@@ -23,13 +24,13 @@ class Gateway
               :name => json[gateway_id]['name'],
             }
           end
-          block.call(data)
+          @block.call(data)
         else
-          block.call(nil)
+          @block.call(nil)
         end
       end
     end # lambda
 
-    ServerLogin.login(retrieve_data_func, block)
+    ServerLogin.login(retrieve_data_func)
   end
 end

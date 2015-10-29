@@ -2,21 +2,21 @@ class ServerLogin
   HTTP = 'http://'
   LOGIN_URL = '/api/login'
 
-  def self.login(nextproc, block)
+  def self.login(nextproc)
     if $loginSession == nil
-      loginSession(nextproc, block)
+      loginSession(nextproc)
     else
-      nextproc.call(true, block)
+      nextproc.call(true)
     end
   end
   
-  def self.loginSession(nextproc, block)
+  def self.loginSession(nextproc)
     if $loginSession != nil
-      nextproc.call(true, block)
+      nextproc.call(true)
     end
     if $settings.server_address == nil || $settings.username == nil || $settings.password == nil
       puts "login information not configured"
-      nextproc.call(false, block)
+      nextproc.call(false)
     end
 
     url = HTTP + $settings.server_address + LOGIN_URL
@@ -25,9 +25,9 @@ class ServerLogin
     BW::HTTP.post(url, payload: BW::JSON.generate(payload)) do |response|
       if response.ok?
         $loginSession = response.headers['Set-Cookie']
-        nextproc.call(true, block)
+        nextproc.call(true)
       else
-        nextproc.call(false, block)
+        nextproc.call(false)
       end
     end
   end

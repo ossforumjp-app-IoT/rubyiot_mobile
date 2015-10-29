@@ -1,16 +1,19 @@
 class Sensor
   HTTP = 'http://'
-  SENSOR_URL = '/api/sensor?gateway_id=1'
+  SENSOR_URL = '/api/sensor?gateway_id='
 
   # retriving data via api
-  def self.retrieve_data(block)
+  def self.retrieve_data(gateway_id, block)
+    @gateway_id = gateway_id
+    @block = block
     
-    retrieve_data_func = lambda do |login, block|
+    retrieve_data_func = lambda do |login|
       if login == false
-        block.call(nil)
+        @block.call(nil)
       end
       
-      url = HTTP + $settings.server_address + SENSOR_URL
+      url = HTTP + $settings.server_address + SENSOR_URL + @gateway_id.to_s
+      puts url
       BW::HTTP.get(url, {cookie: $loginSession}) do |response|
         if response.ok?
           data = []
@@ -27,13 +30,13 @@ class Sensor
               :unit => json[sensor_id]['unit'],
             }
           end
-          block.call(data)
+          @block.call(data)
         else
-          block.call(nil)
+          @block.call(nil)
         end
       end
     end # lambda
 
-    ServerLogin.login(retrieve_data_func, block)
+    ServerLogin.login(retrieve_data_func)
   end
 end
