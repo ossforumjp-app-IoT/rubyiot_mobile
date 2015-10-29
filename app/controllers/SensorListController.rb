@@ -155,6 +155,7 @@ class SensorListController < UIViewController
 
 
   def viewWillDisappear(animated)
+    stopTimer
     self.tabBarItem.badgeValue = nil
   end
 
