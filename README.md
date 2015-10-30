@@ -13,9 +13,11 @@ rubyiot_mobile
 --------
 ### 動作環境
 
-OS X 10.9.5
-Xcode 6.2
-RubyMotion 3.14
+以下の環境で動作確認しています。
+
+* OS X 10.9.5
+* Xcode 6.2
+* RubyMotion 3.14
 
 ### ビルド/実行方法
 Xcode, RubyMotionはすでにインストールされていることを想定しています。
