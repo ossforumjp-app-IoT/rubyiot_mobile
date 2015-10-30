@@ -1,3 +1,4 @@
+# coding: utf-8
 class Monitor
   # rakuten item search api (to set applicationId value)
   HTTP = 'http://'
@@ -6,7 +7,7 @@ class Monitor
   # retriving data via api
   def self.retrieve_data(block, sensor_id)
     url = HTTP + $settings.server_address + MONITOR_URL + "?sensor_id=#{sensor_id}"
-    BW::HTTP.get(url) do |response|
+    BW::HTTP.get(url, {cookie: $loginSession}) do |response|
       if response.ok?
         data = []
         #p "response=#{response}"
@@ -32,7 +33,7 @@ payload = <<EOS
 EOS
 
 #p "payload=#{payload}"
-    BW::HTTP.post(url, payload: payload) do |response|
+    BW::HTTP.post(url, payload: payload, {cookie: $loginSession}) do |response|
       if response.ok?
         p "OK"
       else

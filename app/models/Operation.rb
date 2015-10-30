@@ -6,7 +6,7 @@ class Operation
   # retriving data via api
   def self.retrieve_data(block, operation_id)
     url = HTTP + $settings.server_address + OPERATION_STATUS_URL + "?operation_id=#{operation_id}"
-    BW::HTTP.get(url) do |response|
+    BW::HTTP.get(url, {cookie: $loginSession}) do |response|
       if response.ok?
         data = []
         #p "response=#{response}"
@@ -31,7 +31,7 @@ payload = <<EOS
 EOS
 
     #p "payload=#{payload}"
-    BW::HTTP.post(url, payload: payload) do |response|
+    BW::HTTP.post(url, payload: payload, {cookie: $loginSession}) do |response|
       if response.ok?
         data = []
         json = BW::JSON.parse(response.body.to_str)

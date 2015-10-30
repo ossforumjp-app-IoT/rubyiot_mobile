@@ -1,20 +1,18 @@
+# coding: utf-8
 class AppSettingController < UITableViewController
 
-  CONNECTION_SECTION = 0
-  SERVER_ROW_NUMBER = 0
-=begin
-  ACCOUNT_ROW_NUMBER = 1
-  PASSWORDROW_NUMBER = 2
-  NUMBER_OF_ROWS_IN_CONNECTION_SECTION = 3
-=end
-  NUMBER_OF_ROWS_IN_CONNECTION_SECTION = 1
-
-  APP_VERSION_SECTION = 1
-  APP_VERSION_ROW_NUMBER = 0
-  NUMBER_OF_ROWS_IN_APP_VERSION_SECTION = 1
+  SETTING_ITEMS = [
+    [
+      { :text => "サーバ", :value => proc{$settings.server_address}, :set => proc{|v| $settings.server_address = v} },
+      { :text => "ユーザ名", :value => proc{$settings.username}, :set => proc{|v| $settings.username = v} },
+      { :text => "パスワード", :value => proc{$settings.password}, :set => proc{|v| $settings.password = v} },
+    ],
+    [
+      { :text => "バージョン", :value => nil }
+    ]
+  ]
 
   SERVER_TEXT = "サーバ"
-  VERSION_TEXT = "バージョン"
   APP_VERSION = "1.0.0"
 
   def init
@@ -43,16 +41,12 @@ class AppSettingController < UITableViewController
     self.tableView.reloadData
   end
 
-  def numberOfSectionsInTableView tableView
-    2
+  def numberOfSectionsInTableView(tableView)
+    SETTING_ITEMS.count
   end
 
-  def tableView(tableView, numberOfRowsInSection: indexPath)
-    if indexPath == 0
-      NUMBER_OF_ROWS_IN_CONNECTION_SECTION
-    else
-      NUMBER_OF_ROWS_IN_APP_VERSION_SECTION
-    end
+  def tableView(tableView, numberOfRowsInSection: section)
+    SETTING_ITEMS[section].count
   end
 
   CellID = 'CellIdentifier'
@@ -60,12 +54,14 @@ class AppSettingController < UITableViewController
     cell = tableView.dequeueReusableCellWithIdentifier(CellID) || UITableViewCell.alloc.initWithStyle(UITableViewCellStyleValue1, reuseIdentifier:CellID)
     cell.userInteractionEnabled = true
 
-    case indexPath.section
-    when CONNECTION_SECTION
-      display_connection_section indexPath, cell
-    when APP_VERSION_SECTION
-      display_version_section indexPath, cell
+    cell.textLabel.text = SETTING_ITEMS[indexPath.section][indexPath.row][:text]
+    if SETTING_ITEMS[indexPath.section][indexPath.row][:value] == nil
+      cell.detailTextLabel.text = APP_VERSION
+    else
+      cell.detailTextLabel.text = SETTING_ITEMS[indexPath.section][indexPath.row][:value].call
+      cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator
     end
+    
     cell
   end
 
@@ -74,50 +70,12 @@ class AppSettingController < UITableViewController
   end
 
   def tableView(tableView, didSelectRowAtIndexPath: indexPath)
-    selectedCell = tableView.cellForRowAtIndexPath(indexPath)
-    text = selectedCell.textLabel.text
-
-    case text
-    when SERVER_TEXT
-      AppSettingDetailController.new.tap do |c|
-        c.item = { name: SERVER_TEXT, value: $settings.server_address}
-        navigationController.pushViewController(c, animated:true)    
-      end
-      #self.navigationController.pushViewController(AppSettingDetailController.alloc.initAndSetCode, animated: true)
-    else 
-      alert = UIAlertView.alloc.init
-      alert.message = "Error: #{text} was not captured above"
-      alert.addButtonWithTitle "OK"
-      alert.show
-    end
-  end
-
-  private
-
-  def display_connection_section indexPath, cell
-    case indexPath.row
-    when SERVER_ROW_NUMBER
-      cell.textLabel.text = SERVER_TEXT
-      cell.detailTextLabel.text = $settings.server_address
-      cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator
-
-    when ACCOUNT_ROW_NUMBER
-      cell.textLabel.text = ACCOUNT_TEXT
-      cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator
-
-    when PASSWORDROW_NUMBER
-      cell.textLabel.text = PASSWORD_TEXT
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator
-
-    end
-  end
-
-  def display_version_section indexPath, cell
-    case indexPath.row
-    when APP_VERSION_ROW_NUMBER
-      cell.textLabel.text = VERSION_TEXT
-      cell.userInteractionEnabled = false
-      cell.detailTextLabel.text = APP_VERSION
+    AppSettingDetailController.new.tap do |c|
+      c.item = { name: SETTING_ITEMS[indexPath.section][indexPath.row][:text],
+                 value: SETTING_ITEMS[indexPath.section][indexPath.row][:value].call,
+                 set: SETTING_ITEMS[indexPath.section][indexPath.row][:set]
+               }
+      navigationController.pushViewController(c, animated:true)
     end
   end
 end

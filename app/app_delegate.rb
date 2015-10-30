@@ -1,3 +1,4 @@
+# coding: utf-8
 class AppDelegate
   #attr_accessor :notice_list
 
@@ -9,11 +10,18 @@ class AppDelegate
        $settings.server_address = ""
     end
 
+    # サーバへのログインセッション
+    $loginSession = nil
+
     @window = UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
 
-    # Sensor List
-    sensor_list_controller = SensorListController.alloc.initWithNibName(nil, bundle: nil)
-    sensor_nav_controller = UINavigationController.alloc.initWithRootViewController(sensor_list_controller)
+    ## Sensor List
+    #sensor_list_controller = SensorListController.alloc.initWithNibName(nil, bundle: nil)
+    #sensor_nav_controller = UINavigationController.alloc.initWithRootViewController(sensor_list_controller)
+
+    # Gateway List
+    gateway_list_controller = GatewayListController.alloc.initWithNibName(nil, bundle: nil)
+    gateway_nav_controller = UINavigationController.alloc.initWithRootViewController(gateway_list_controller)
 
     app_setting_controller = AppSettingController.alloc.init
     app_setting_controller.title = "設定"
@@ -23,7 +31,8 @@ class AppDelegate
     #notice_nav_controller = UINavigationController.alloc.initWithRootViewController(notice_controller)
 
     tab_controller = UITabBarController.alloc.initWithNibName(nil, bundle: nil)
-    tab_controller.viewControllers = [sensor_nav_controller, app_setting_nav_controller]
+    #tab_controller.viewControllers = [sensor_nav_controller, app_setting_nav_controller]
+    tab_controller.viewControllers = [gateway_nav_controller, app_setting_nav_controller]
 
     @window.rootViewController = tab_controller
     @window.makeKeyAndVisible

@@ -1,3 +1,4 @@
+# http://qiita.com/torshinor/items/2c783d9ae4696e31a98b
 class Settings
 
   class << self
@@ -7,11 +8,8 @@ class Settings
     end
   end
 
-  # 各種設定の名前
-#  Properties = %w(server_address server_port)
-  Properties = %w(server_address)
+  Properties = %w(server_address username password)
   
-  # getter、setterを動的に生成
   Properties.each do |name|
     define_method("#{name}=") do |v|
       App::Persistence[name] = v

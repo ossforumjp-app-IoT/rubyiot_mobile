@@ -1,3 +1,4 @@
+# coding: utf-8
 class AppSettingDetailController < UIViewController
 
   attr_accessor :item
@@ -47,7 +48,7 @@ class AppSettingDetailController < UIViewController
       @save.enabled = false
       @text_field.enabled = false
       # TODO: 設定の更新(値チェック)
-      $settings.server_address = @text_field.text
+      self.item[:set].call(@text_field.text)
       self.navigationController.popViewControllerAnimated(true)
     end
 

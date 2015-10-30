@@ -1,3 +1,4 @@
+# coding: utf-8
 # センサーリストの更新間隔
 SENSOR_LIST_UPDATE_INTERVAL = 5 # ポーリング間隔
 
@@ -43,6 +44,8 @@ end
 
 # センサーリスト画面
 class SensorListController < UIViewController
+
+  attr_accessor :gateway
 
   def viewDidLoad
     super
@@ -90,7 +93,7 @@ class SensorListController < UIViewController
   end
 
   def tableView(tableView, didSelectRowAtIndexPath:indexPath)
-      SensorController.new.tap do |c|
+    SensorController.new.tap do |c|
       c.item = @sensors[indexPath.row]
       back_button = UIBarButtonItem.alloc.initWithTitle("戻る", style:UIBarButtonItemStylePlain, target:nil, action:nil)
       self.navigationItem.setBackBarButtonItem(back_button, animated:true)
@@ -147,11 +150,12 @@ class SensorListController < UIViewController
         App.alert("センサー情報の取得に失敗しました")
       end
     }
-    Sensor.retrieve_data(loaded_data_func)
+    Sensor.retrieve_data(self.gateway[:id], loaded_data_func)
   end
 
 
   def viewWillDisappear(animated)
+    stopTimer
     self.tabBarItem.badgeValue = nil
   end
 
