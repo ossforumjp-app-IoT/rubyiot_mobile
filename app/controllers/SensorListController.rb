@@ -94,6 +94,7 @@ class SensorListController < UIViewController
 
   def tableView(tableView, didSelectRowAtIndexPath:indexPath)
     SensorController.new.tap do |c|
+      c.gateway_id = self.gateway[:id]
       c.item = @sensors[indexPath.row]
       back_button = UIBarButtonItem.alloc.initWithTitle("戻る", style:UIBarButtonItemStylePlain, target:nil, action:nil)
       self.navigationItem.setBackBarButtonItem(back_button, animated:true)

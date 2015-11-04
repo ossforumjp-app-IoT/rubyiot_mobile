@@ -1,6 +1,8 @@
+# coding: utf-8
 #class SensorController < BaseDetailController
 class SensorController < UIViewController
 
+  attr_accessor :gateway_id
   attr_accessor :item
 
   def show_no_controller
@@ -63,7 +65,7 @@ class SensorController < UIViewController
       end
     }
     # デバイスのコントローラ（リモコン）を取得
-    Controller.retrieve_data(loaded_data_func)
+    Controller.retrieve_data(self.gateway_id, loaded_data_func)
   end
 
   # 監視値設定画面を表示
