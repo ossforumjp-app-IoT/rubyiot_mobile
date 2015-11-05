@@ -10,6 +10,7 @@ class Sensor
     retrieve_data_func = lambda do |login|
       if login == false
         @block.call(nil)
+        return
       end
       
       url = HTTP + $settings.server_address + SENSOR_URL + @gateway_id.to_s
