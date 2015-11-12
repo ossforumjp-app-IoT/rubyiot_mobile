@@ -1,3 +1,4 @@
+# coding: utf-8
 OPERATION_POLLING_INTERVAL = 1
 
 class RemoteController < UIViewController
