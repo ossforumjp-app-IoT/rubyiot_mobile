@@ -1,3 +1,4 @@
+# coding: utf-8
 OPERATION_POLLING_INTERVAL = 1
 
 class RemoteController < UIViewController
@@ -56,7 +57,11 @@ class RemoteController < UIViewController
         push("0")
       end
     end
-    self.view << @off_button    
+    self.view << @off_button
+
+    @indicator = IndicatorImageView.alloc.initWithFrame(self.view.bounds)
+    self.view.addSubview(@indicator)
+    
     setControlStatus
   end
 
@@ -79,6 +84,8 @@ class RemoteController < UIViewController
     else
       @on_button.enabled = false
     end
+
+    @indicator.loading = true
     # リモコン操作の実行
     Operation.post_data(loaded_data_func, self.controller[:id], value)
   end
@@ -165,6 +172,7 @@ class RemoteController < UIViewController
       @off_button.enabled = true
       @off_button.backgroundColor = getButtonColor
     end
+    @indicator.loading = false
   end
 
   def getButtonColor

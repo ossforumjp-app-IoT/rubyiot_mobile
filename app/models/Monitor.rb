@@ -27,13 +27,8 @@ class Monitor
 
   def self.post_data(block, sensor_id, min, max)
     url = HTTP + $settings.server_address + MONITOR_URL + "?sensor_id=#{sensor_id}"
-
-payload = <<EOS
-  { "#{sensor_id}": { "min": "#{min}", "max": "#{max}" } }
-EOS
-
-#p "payload=#{payload}"
-    BW::HTTP.post(url, payload: payload, {cookie: $loginSession}) do |response|
+    payload = { "#{sensor_id}" => { "min" => "#{min}", "max" => "#{max}" } }
+    BW::HTTP.post(url, payload: BW::JSON.generate(payload), cookie: $loginSession) do |response|
       if response.ok?
         p "OK"
       else

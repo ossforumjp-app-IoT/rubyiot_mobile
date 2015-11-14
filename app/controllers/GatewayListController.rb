@@ -39,6 +39,9 @@ class GatewayListController < UIViewController
     @table.dataSource = self
     @table.delegate = self
 
+    @indicator = IndicatorImageView.alloc.initWithFrame(self.view.bounds)
+    self.view.addSubview(@indicator)
+
     # データ取得と描画
     retrieve_data
   end
@@ -79,6 +82,7 @@ class GatewayListController < UIViewController
   # ゲートウェリストの取得
   def retrieve_data
     loaded_data_func = lambda { |data|
+      @indicator.loading = false
       if data != nil
         @gateways = data
         @table.reloadData
@@ -86,6 +90,7 @@ class GatewayListController < UIViewController
         App.alert("ゲートウェイ情報の取得に失敗しました")
       end
     }
+    @indicator.loading = true
     Gateway.retrieve_data(loaded_data_func)
   end
 end

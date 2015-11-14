@@ -1,7 +1,11 @@
-# Pickerの値(-10.0から50.0までしか対応していない)
+# coding: utf-8
+
+# Pickerの値(-10から50までしか対応していない)
+# 監視値は整数のみとする(小数点は対応しない)
 MonitorValues = []
 -10.upto(50) do |i|
-  MonitorValues << i.to_s + ".0"
+  #MonitorValues << i.to_s + ".0"
+  MonitorValues << i.to_s
 end
 MonitorValues << ""
 
@@ -111,7 +115,11 @@ class MonitorController < UIViewController
   def pop
     loaded_data_func = lambda {
       self.navigationController.popViewControllerAnimated(true)
+    @indicator.loading = false
     }
+    @indicator = IndicatorImageView.alloc.initWithFrame(self.view.bounds)
+    self.view.addSubview(@indicator)
+    @indicator.loading = true
     Monitor.post_data(loaded_data_func, self.monitor[:id], MonitorValues[@lower], MonitorValues[@upper])
   end
 

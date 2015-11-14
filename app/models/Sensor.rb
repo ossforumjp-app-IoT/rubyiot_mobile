@@ -10,10 +10,10 @@ class Sensor
     retrieve_data_func = lambda do |login|
       if login == false
         @block.call(nil)
+        return
       end
       
       url = HTTP + $settings.server_address + SENSOR_URL + @gateway_id.to_s
-      puts url
       BW::HTTP.get(url, {cookie: $loginSession}) do |response|
         if response.ok?
           data = []

@@ -9,6 +9,7 @@ class Gateway
     retrieve_data_func = lambda do |login|
       if login == false
         @block.call(nil)
+        return
       end
       
       url = HTTP + $settings.server_address + SENSOR_URL

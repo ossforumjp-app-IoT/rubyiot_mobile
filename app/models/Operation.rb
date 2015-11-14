@@ -25,13 +25,8 @@ class Operation
 
   def self.post_data(block, controller_id, value)
     url = HTTP + $settings.server_address + OPERATION_URL
-
-payload = <<EOS
-  { "#{controller_id}": "#{value}" }
-EOS
-
-    #p "payload=#{payload}"
-    BW::HTTP.post(url, payload: payload, {cookie: $loginSession}) do |response|
+    payload = {"#{controller_id}" => "#{value}"}
+    BW::HTTP.post(url, payload: BW::JSON.generate(payload), cookie: $loginSession) do |response|
       if response.ok?
         data = []
         json = BW::JSON.parse(response.body.to_str)

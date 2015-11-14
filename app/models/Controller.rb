@@ -8,7 +8,6 @@ class Controller
     @block = block
 
     url = HTTP + $settings.server_address + CONTROLLER_URL + @gateway_id.to_s
-    puts url
     BW::HTTP.get(url, {cookie: $loginSession}) do |response|
       data = []
       if response.ok?

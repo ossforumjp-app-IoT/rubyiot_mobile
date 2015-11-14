@@ -60,8 +60,12 @@ class SensorListController < UIViewController
     @table.dataSource = self
     @table.delegate = self
 
+    @indicator = IndicatorImageView.alloc.initWithFrame(self.view.bounds)
+    self.view.addSubview(@indicator)
+    
     @sensors = nil
     retrieve_data
+    @indicator.loading = true
     @pending = false
   end
 
@@ -94,6 +98,7 @@ class SensorListController < UIViewController
 
   def tableView(tableView, didSelectRowAtIndexPath:indexPath)
     SensorController.new.tap do |c|
+      c.gateway_id = self.gateway[:id]
       c.item = @sensors[indexPath.row]
       back_button = UIBarButtonItem.alloc.initWithTitle("戻る", style:UIBarButtonItemStylePlain, target:nil, action:nil)
       self.navigationItem.setBackBarButtonItem(back_button, animated:true)
@@ -149,6 +154,7 @@ class SensorListController < UIViewController
         @pending = true # viewを再表示するまで通信やめとく
         App.alert("センサー情報の取得に失敗しました")
       end
+      @indicator.loading = false
     }
     Sensor.retrieve_data(self.gateway[:id], loaded_data_func)
   end
