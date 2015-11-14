@@ -43,6 +43,8 @@ class SensorController < UIViewController
     @toolbar.items = [gap, chart_btn, gap, operate_button, gap, monitor_button, gap]
     self.view.addSubview(@toolbar)
 
+    @indicator = IndicatorImageView.alloc.initWithFrame(self.view.bounds)
+    self.view.addSubview(@indicator)
   end
 
   # リモコン操作画面を表示
@@ -63,9 +65,11 @@ class SensorController < UIViewController
       if found == false
         show_no_controller
       end
+    @indicator.loading = false
     }
     # デバイスのコントローラ（リモコン）を取得
     Controller.retrieve_data(self.gateway_id, loaded_data_func)
+    @indicator.loading = true
   end
 
   # 監視値設定画面を表示
@@ -75,9 +79,11 @@ class SensorController < UIViewController
         monitor_controller = MonitorController.alloc.initWithMonitor(d)
         self.navigationController.pushViewController(monitor_controller, animated: true)    
       end
+      @indicator.loading = false
     }
     # 監視値を取得する
     Monitor.retrieve_data(loaded_data_func, item[:id])
+    @indicator.loading = true
   end
 
   # チャート画面を表示

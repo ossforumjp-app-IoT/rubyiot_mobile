@@ -5,7 +5,7 @@ class IndicatorImageView < UIImageView
     super
     puts "initWithFrame: #{rect}"
     @loading = false
-    @loading_view = UIActivityIndicatorView.alloc.initWithActivityIndicatorStyle(UIActivityIndicatorViewStyleWhite).tap do |lv|
+    @loading_view = UIActivityIndicatorView.alloc.initWithActivityIndicatorStyle(UIActivityIndicatorViewStyleWhiteLarge).tap do |lv|
       lv.color = UIColor.blackColor
     end
     self

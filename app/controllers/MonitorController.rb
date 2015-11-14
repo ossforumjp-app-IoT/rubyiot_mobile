@@ -115,7 +115,11 @@ class MonitorController < UIViewController
   def pop
     loaded_data_func = lambda {
       self.navigationController.popViewControllerAnimated(true)
+    @indicator.loading = false
     }
+    @indicator = IndicatorImageView.alloc.initWithFrame(self.view.bounds)
+    self.view.addSubview(@indicator)
+    @indicator.loading = true
     Monitor.post_data(loaded_data_func, self.monitor[:id], MonitorValues[@lower], MonitorValues[@upper])
   end
 
